@@ -54,7 +54,7 @@ body{
 
 /* ── HERO ── */
 .hero{position:relative;width:100%;min-height:100dvh;display:flex;flex-direction:column;background:#000}
-.hero-bg{position:absolute;inset:0;background:url('./bg-tiara.jpg') center/cover no-repeat}
+.hero-bg{position:absolute;inset:0;background:url('./bg-hero.jpg') center/cover no-repeat}
 .hero-veil{
   position:absolute;inset:0;
   background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.6) 55%,rgba(0,0,0,.93) 80%,#000 100%);
@@ -107,9 +107,9 @@ section{padding:64px 26px}
 .section-bg>*{position:relative;z-index:1}
 #scd::before{background-image:url('./bg-flores-1.jpg');opacity:.40}
 #sfam::before{background-image:url('./bg-flores-1.jpg');opacity:.25}
-#subic::before{background-image:url('./bg-flores-3.jpg');opacity:.18}
+#subic::before{background-image:url('./bg-ubicacion.jpg');opacity:.22}
 #siti::before{background-image:url('./bg-flores-2.jpg');opacity:.28}
-#sdc::before{background-image:url('./bg-tiara.jpg');opacity:.18}
+#sdc::before{background-image:url('./bg-dresscode.jpg');opacity:.22}
 #sgifts::before{background-image:url('./bg-flores-2.jpg');opacity:.22}
 #srsvp::before{background-image:url('./bg-flores-1.jpg');opacity:.30}
 
@@ -344,15 +344,105 @@ footer{padding:50px 20px;text-align:center}
 footer .fn{font-family:'Great Vibes',cursive;font-size:50px;color:#fff}
 footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-top:6px;opacity:.7}
 
-/* ── MUSIC FAB ── */
-.music-fab{
-  position:fixed;bottom:24px;right:24px;z-index:998;width:56px;height:56px;border-radius:50%;
-  border:none;cursor:pointer;background:#cc0000;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(204,0,0,.5);animation:fabpulse 2.8s infinite ease-out;
+/* ── VINYL MUSIC BUTTON ── */
+.vinyl-btn{
+  position:fixed;bottom:20px;right:20px;z-index:50;
+  width:72px;height:72px;border-radius:50%;padding:0;
+  border:none;cursor:pointer;background:transparent;
+  opacity:0;transform:scale(.6);pointer-events:none;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 4px 18px rgba(0,0,0,.45),0 0 0 1px rgba(255,0,0,.12);
 }
-@keyframes fabpulse{0%{box-shadow:0 0 0 0 rgba(204,0,0,.55)}70%{box-shadow:0 0 0 18px rgba(204,0,0,0)}100%{box-shadow:0 0 0 0 rgba(204,0,0,0)}}
-.music-fab svg{width:24px;height:24px}
+.vinyl-btn.is-ready{opacity:1;transform:scale(1);pointer-events:auto}
+.vinyl-btn:hover{transform:scale(1.1)}
+.vinyl-spin{
+  width:100%;height:100%;border-radius:50%;position:relative;
+  transition:none;
+}
+.vinyl-btn.is-playing .vinyl-spin{animation:vinylSpin 1.8s linear infinite}
+@keyframes vinylSpin{to{transform:rotate(360deg)}}
+.vinyl-disc{width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle,#1a0000 4%,transparent 4.5%),
+    radial-gradient(circle,#ff0000 0%,#cc0000 17%,#990000 19%,transparent 19.5%),
+    repeating-radial-gradient(circle,
+      transparent 20%,rgba(255,255,255,.055) 20.8%,transparent 21.5%,
+      transparent 24%,rgba(255,255,255,.04) 24.8%,transparent 25.5%,
+      transparent 28%,rgba(255,255,255,.055) 28.8%,transparent 29.5%,
+      transparent 32%,rgba(255,255,255,.04) 32.8%,transparent 33.5%,
+      transparent 36%,rgba(255,255,255,.055) 36.8%,transparent 37.5%,
+      transparent 40%,rgba(255,255,255,.04) 40.8%,transparent 41.5%,
+      transparent 44%,rgba(255,255,255,.055) 44.8%,transparent 45.5%,
+      transparent 48%,rgba(255,255,255,.04) 48.8%,transparent 49.5%,
+      transparent 52%,rgba(255,255,255,.055) 52.8%,transparent 53.5%,
+      transparent 56%,rgba(255,255,255,.04) 56.8%,transparent 57.5%,
+      transparent 60%,rgba(255,255,255,.055) 60.8%,transparent 61.5%,
+      transparent 64%,rgba(255,255,255,.04) 64.8%,transparent 65.5%,
+      transparent 68%,rgba(255,255,255,.055) 68.8%,transparent 69.5%,
+      transparent 72%,rgba(255,255,255,.04) 72.8%,transparent 73.5%,
+      transparent 76%,rgba(255,255,255,.055) 76.8%,transparent 77.5%,
+      transparent 80%,rgba(255,255,255,.04) 80.8%,transparent 81.5%,
+      transparent 84%,rgba(255,255,255,.055) 84.8%,transparent 85.5%,
+      transparent 88%,rgba(255,255,255,.04) 88.8%,transparent 89.5%,
+      transparent 92%,rgba(255,255,255,.055) 92.8%,transparent 93.5%,
+      transparent 96%,rgba(255,255,255,.04) 96.8%,transparent 97.5%
+    ),
+    radial-gradient(circle,#1a0000 0%,#110000 60%,#1a0000 100%);
+  box-shadow:inset 0 0 8px rgba(0,0,0,.4);
+}
+.vinyl-sheen{
+  position:absolute;inset:0;border-radius:50%;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.09) 42%,rgba(255,255,255,.15) 48%,rgba(255,255,255,.09) 54%,transparent 66%);
+  pointer-events:none;
+}
+.vinyl-label-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Great Vibes',cursive;font-size:11px;color:#1a0000;
+  text-align:center;line-height:1.1;opacity:.7;
+  pointer-events:none;width:26px;
+}
+.vinyl-label-text small{font-family:'Lato',sans-serif;font-size:5px;letter-spacing:.15em;display:block;margin-top:1px;opacity:.6}
+.vinyl-hole{
+  position:absolute;top:50%;left:50%;width:6px;height:6px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:#1a0000;
+  box-shadow:0 0 0 1.5px rgba(255,0,0,.4);
+}
+.vinyl-icons{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:18px;height:18px;pointer-events:none;z-index:2;
+}
+.vinyl-icons svg{width:100%;height:100%;display:block}
+.vinyl-icon-pause{display:none}
+.vinyl-btn.is-playing .vinyl-icon-play{display:none}
+.vinyl-btn.is-playing .vinyl-icon-pause{display:block}
+.vinyl-btn::after{
+  content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid var(--accent);opacity:.3;
+  animation:vinylPulse 3s ease-in-out infinite;
+}
+.vinyl-btn.is-playing::after{animation-duration:1.6s}
+@keyframes vinylPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.12);opacity:.05}}
+.vinyl-tonearm{
+  position:absolute;top:-4px;right:-2px;width:24px;height:34px;
+  transform-origin:top right;transform:rotate(-28deg);
+  transition:transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none;z-index:1;
+}
+.vinyl-btn.is-playing .vinyl-tonearm{transform:rotate(-12deg)}
+.vinyl-tonearm-line{
+  position:absolute;top:2px;right:4px;width:2px;height:28px;
+  background:linear-gradient(to bottom,#990000,#ff0000 40%,#990000);
+  border-radius:1px;transform:rotate(-5deg);transform-origin:top center;
+}
+.vinyl-tonearm-head{
+  position:absolute;bottom:0;right:2px;width:5px;height:6px;
+  background:#ff0000;border-radius:0 0 2px 2px;
+}
+.vinyl-tonearm-pivot{
+  position:absolute;top:0;right:2px;width:7px;height:7px;
+  background:radial-gradient(circle,#ff0000,#990000);border-radius:50%;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
+}
 </style>
 </head>
 <body>
@@ -631,13 +721,28 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   </div>
 </div>
 
-<!-- MUSICA -->
-<button class="music-fab" id="musicFab" aria-label="Reproducir musica">
-  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-</button>
-<audio id="bgAudio" loop preload="none">
+<!-- MUSIC -->
+<audio id="music" preload="none" loop>
   <source src="https://audio.jukehost.co.uk/9hKrAnJzrCzXkHc1qMfUuDqxIgTYPvYE" type="audio/mpeg">
 </audio>
+<button class="vinyl-btn" id="music-btn" type="button" aria-label="Reproducir musica de la invitacion">
+  <div class="vinyl-tonearm">
+    <div class="vinyl-tonearm-pivot"></div>
+    <div class="vinyl-tonearm-line"></div>
+    <div class="vinyl-tonearm-head"></div>
+  </div>
+  <div class="vinyl-spin">
+    <div class="vinyl-disc">
+      <div class="vinyl-sheen"></div>
+      <div class="vinyl-label-text">Nat<small>2026</small></div>
+      <div class="vinyl-hole"></div>
+    </div>
+  </div>
+  <div class="vinyl-icons">
+    <svg class="vinyl-icon-play" viewBox="0 0 24 24" fill="#1a0000" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="vinyl-icon-pause" viewBox="0 0 24 24" fill="#1a0000" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  </div>
+</button>
 
 <script>
 window.scrollTo(0,0);
@@ -693,6 +798,7 @@ function launchPage(){
   initScrollReveal();
   initCountdown();
   initItinerary();
+  try{startMusic()}catch(e){}
 }
 
 /* ── SCROLL REVEAL ── */
@@ -798,13 +904,41 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLluviaModal()});
 
-/* ── MUSIC ── */
-var fab=document.getElementById('musicFab'),audio=document.getElementById('bgAudio'),playing=false;
-fab.addEventListener('click',function(){
-  playing=!playing;
-  if(playing){audio.play().catch(function(){});fab.style.background='#990000'}
-  else{audio.pause();fab.style.background='#cc0000'}
-});
+/* ── VINYL MUSIC ── */
+var musicEl=document.getElementById('music'),musicBtn=document.getElementById('music-btn');
+function showMusicBtn(){if(musicBtn)musicBtn.classList.add('is-ready')}
+if(musicEl){
+  musicEl.addEventListener('play',function(){musicBtn&&musicBtn.classList.add('is-playing')});
+  musicEl.addEventListener('pause',function(){musicBtn&&musicBtn.classList.remove('is-playing')});
+}
+function startMusic(){
+  showMusicBtn();
+  if(!musicEl)return;
+  var p=musicEl.play();
+  if(p&&typeof p.catch==='function')p.catch(function(){});
+}
+if(musicBtn){
+  musicBtn.addEventListener('click',function(){
+    if(!musicEl)return;
+    if(musicEl.paused){musicEl.play().catch(function(){})}
+    else{musicEl.pause()}
+  });
+}
+function tryAutoMusic(){
+  if(!musicEl)return;
+  showMusicBtn();
+  var p=musicEl.play();
+  if(p&&typeof p.catch==='function'){
+    p.catch(function(){
+      function onFirst(){startMusic();document.removeEventListener('click',onFirst);document.removeEventListener('touchstart',onFirst);document.removeEventListener('scroll',onFirst)}
+      document.addEventListener('click',onFirst,{once:false});
+      document.addEventListener('touchstart',onFirst,{passive:true});
+      document.addEventListener('scroll',onFirst,{once:false});
+    });
+  }
+}
+if(musicEl&&musicEl.readyState>=2){tryAutoMusic()}
+else if(musicEl){musicEl.addEventListener('canplay',tryAutoMusic,{once:true})}
 </script>
 </body>
 </html>
