@@ -349,6 +349,13 @@ section{padding:64px 26px}
 .btn-wa:hover{background:#1da851;transform:translateY(-2px)}
 .btn-wa:hover::after{opacity:1}
 
+/* ── CROSSFADE GALERIA ── */
+#sgal{padding:0;height:300vh}
+.cf-frame{position:sticky;top:0;width:100%;height:100dvh;overflow:hidden}
+.cf-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;will-change:opacity}
+.cf-fade-top{position:absolute;top:0;left:0;right:0;height:22%;z-index:2;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.6) 50%,transparent 100%);pointer-events:none}
+.cf-fade-bot{position:absolute;bottom:0;left:0;right:0;height:22%;z-index:2;background:linear-gradient(to top,#000 0%,rgba(0,0,0,.6) 50%,transparent 100%);pointer-events:none}
+
 /* ── FOOTER ── */
 footer{padding:50px 20px;text-align:center}
 footer .fn{font-family:'Great Vibes',cursive;font-size:50px;color:#fff}
@@ -654,6 +661,27 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     </svg>
   </div>
 
+  <!-- CROSSFADE GALERIA -->
+  <section id="sgal">
+    <div class="cf-frame">
+      <img class="cf-img" id="cfImg1" src="./foto1.jpg" alt="Natalia">
+      <img class="cf-img" id="cfImg2" src="./foto2.jpg" alt="Natalia">
+      <img class="cf-img" id="cfImg3" src="./foto3.jpg" alt="Natalia">
+      <img class="cf-img" id="cfImg4" src="./foto4.jpg" alt="Natalia">
+      <img class="cf-img" id="cfImg5" src="./foto5.jpg" alt="Natalia">
+      <div class="cf-fade-top"></div>
+      <div class="cf-fade-bot"></div>
+    </div>
+  </section>
+
+  <div class="orn rv">
+    <svg viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="15" x2="52" y2="15" stroke="#ff0000" stroke-width=".8" opacity=".3"/>
+      <path d="M65 22C65 22 58 16 58 12C58 9.5 59.8 8 62 8C63.5 8 65 9.5 65 9.5S66.5 8 68 8C70.2 8 72 9.5 72 12C72 16 65 22 65 22Z" fill="#ff0000" opacity=".45"/>
+      <line x1="78" y1="15" x2="122" y2="15" stroke="#ff0000" stroke-width=".8" opacity=".3"/>
+    </svg>
+  </div>
+
   <!-- LLUVIA DE SOBRES (azucena style) -->
   <section id="sgifts" class="section-bg">
     <p class="eyebrow rv">Celebra con Nosotros</p>
@@ -821,6 +849,7 @@ function launchPage(){
   initScrollReveal();
   initCountdown();
   initItinerary();
+  initCrossfade();
   try{startMusic()}catch(e){}
 }
 
@@ -892,6 +921,28 @@ function initItinerary(){
     var els=[item.querySelector('.itv3-time'),item.querySelector('.itv3-ev'),item.querySelector('.itv3-sub')].filter(Boolean);
     gsap.fromTo(els,{y:14,opacity:0},{y:0,opacity:1,duration:.8,ease:'power2.out',stagger:.08,
       scrollTrigger:{trigger:item,start:'top 86%',once:true}});
+  });
+}
+
+function initCrossfade(){
+  gsap.set('#cfImg2,#cfImg3,#cfImg4,#cfImg5',{opacity:0});
+  var breaks=[0.10,0.32,0.54,0.76];
+  var T=0.14;
+  var cl=gsap.utils.clamp;
+  ScrollTrigger.create({
+    trigger:'#sgal',
+    start:'top top',
+    end:'bottom bottom',
+    scrub:1,
+    onUpdate:function(self){
+      var p=self.progress;
+      var f=function(s){return cl(0,1,(p-s)/T)};
+      gsap.set('#cfImg1',{opacity:1-f(breaks[0])});
+      gsap.set('#cfImg2',{opacity:Math.min(f(breaks[0]),1-f(breaks[1]))});
+      gsap.set('#cfImg3',{opacity:Math.min(f(breaks[1]),1-f(breaks[2]))});
+      gsap.set('#cfImg4',{opacity:Math.min(f(breaks[2]),1-f(breaks[3]))});
+      gsap.set('#cfImg5',{opacity:f(breaks[3])});
+    }
   });
 }
 
